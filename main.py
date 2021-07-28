@@ -29,10 +29,19 @@ class MineSweeper:
         for i in range(MineSweeper.ROWS):
             temp = []
             for c in range(MineSweeper.COLUMNS):
-                btn = MyButton(MineSweeper.window, x=i, y=c, width=5, height=3, font = 'Calibri 15 bold', number=count)
-                count += 1
+                btn = MyButton(MineSweeper.window, x=i, y=c, width=5, height=3, number=count)
+                btn.config(command=lambda button = btn: self.click(button))
+
                 temp.append(btn)
+                count += 1
             self.buttons.append(temp)
+
+    def click(self, clicked_button: MyButton):
+        if clicked_button.is_mine:
+            clicked_button.config(text='*', background='red', disabledforeground='black')
+        else:
+            clicked_button.config(text=clicked_button.number, disabledforeground='black')
+        clicked_button.config(state='disabled')
 
     def get_widges(self):
         for i in range(MineSweeper.ROWS):
